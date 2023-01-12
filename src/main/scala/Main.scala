@@ -5,7 +5,7 @@ import org.apache.spark.sql.{SparkSession, functions => T}
 object Main {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder
-      .master(master = "local[1]")
+      .master(master = "local[6]")
       .appName(name = "Final")
       .config("spark.executor.cores", "6")
       .config("spark.executor.instances", "4")
@@ -68,7 +68,7 @@ object Main {
       .option("dateformat", "yyyy-MM-dd")
       .option("enforceSchema", true)
       .schema(schemaAccounts)
-      .load("C:/Account.csv")
+      .load("data/Account.csv")
 
     //чтение файла Clients.csv как датафрейм
     var сlients_df = spark.read
@@ -79,7 +79,7 @@ object Main {
       .option("dateformat", "yyyy-MM-dd")
       .option("enforceSchema", true)
       .schema(schemaClients)
-      .load("C:/Clients.csv")
+      .load("data/Clients.csv")
 
     //чтение файла Operation.csv как датафрейм
     var operation_df = spark.read
@@ -90,7 +90,7 @@ object Main {
       .option("enforceSchema", true)
       .option("dateformat", "yyyy-MM-dd")
       .schema(schemaOperations)
-      .load("C:/Operation.csv")
+      .load("data/Operation.csv")
       .withColumn("Amount", regexp_replace($"Amount", ",", "."))
 
     //чтение файла Rate.csv как датафрейм
@@ -102,7 +102,7 @@ object Main {
       .option("enforceSchema", true)
       .option("dateformat", "yyyy-MM-dd")
       .schema(schemaRates)
-      .load("C:/Rate.csv")
+      .load("data/Rate.csv")
       .withColumn("Rate", regexp_replace($"Rate", ",", "."))
       .dropDuplicates("Currency")
 
